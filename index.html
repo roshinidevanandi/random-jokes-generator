@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Joke Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(131, 95, 224);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #container {
+            background-color: aliceblue;
+            border-radius: 8px;
+            border: 2px solid #4A90E2;
+            width: 350px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #container:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        #joke {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #btn {
+            background-color: #4A90E2;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #btn:hover {
+            background-color: #357ABD;
+        }
+
+        #btn:focus {
+            outline: none;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 480px) {
+            #container {
+                width: 80%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <p id="joke">Click the button to get a random joke!</p>
+        <button id="btn">Click Me</button>
+    </div>
+
+    <script>
+        let btn = document.getElementById("btn");
+        let joke = document.getElementById("joke"); 
+        async function apicall() {
+            try {
+                let data = await fetch("https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,explicit&type=single");
+                let result = await data.json();
+                // console.log(result)
+                joke.innerText = result.joke;
+                console.log(result.joke);
+            } catch (error) {
+                let joke = document.getElementById("joke");
+                joke.innerText = "Sorry, something went wrong. Please try again.";
+                console.error(error);
+            }
+        }
+
+        btn.addEventListener("click", apicall);
+    </script>
+</body>
+</html>
